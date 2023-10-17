@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Mancala Game</title>
+</head>
+
+<body>
+	<h1>Mancala Game - Game Status</h1>
+
+	<form action="#" th:action="@{/game/initialize}" method="post">
+		<label for="player1Name">Player 1 Name:</label>
+		<input type="text" id="player1Name" name="player1Name" placeholder="Enter Player 1 Name" required>
+		<br>
+		<br>
+		<label for="player2Name">Player 2 Name:</label>
+		<input type="text" id="player2Name" name="player2Name" placeholder="Enter Player 2 Name" required>
+		<br>
+		<br>
+		<button type="submit">Initialize Game</button>
+	</form>
+
+	<!-- Display the board with pits for each player -->
+
+	<h4>Player 1: <span th:text="${player1Name}"></span></h4>
+
+	<table>
+		<tr>
+			<td>M</td>
+			<td>L</td>
+			<td>K</td>
+			<td>J</td>
+			<td>I</td>
+			<td>H</td>
+			<td>G</td>
+		</tr>
+		<tr>
+			<td th:each="pit : ${player1Mancala}">
+				<span th:text="${pit.stones}"></span>
+			</td>
+			<td th:each="pit : ${player1Pits}">
+				<span th:text="${pit.stones}"></span>
+			</td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td>A</td>
+			<td>B</td>
+			<td>C</td>
+			<td>D</td>
+			<td>E</td>
+			<td>F</td>
+			<td>N</td>
+		</tr>
+		<tr>
+			<td></td>
+			<td th:each="pit : ${player2Pits}">
+				<span th:text="${pit.stones}"></span>
+			</td>
+			<td th:each="pit : ${player2Mancala}">
+				<span th:text="${pit.stones}"></span>
+			</td>
+		</tr>
+	</table>
+
+	<h4>Player 2: <span th:text="${player2Name}"></span></h4>
+
+	<!-- Form to make a move -->
+	<form th:action="@{/game/makeMove}" method="post">
+		<label for="pitId">Select a pit to move:</label>
+		<input type="number" id="pitId" name="pitId" placeholder="Enter Pit Id">
+		<button type="submit">Make Move</button>
+	</form>
+	<br>
+	<br>
+	<a href="/game/{gameId}">End Game</a>
+</body>
+
+</html>
